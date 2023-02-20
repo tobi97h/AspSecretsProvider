@@ -3,6 +3,10 @@
 Simple wrapper around the default asp secrets management, making it either settable
 via env or the cli.
 
+This package is also available on nuget 
+
+`dotnet add package SecretsProvider --version 1.0.0`
+
 ## cli
 
 `dotnet user-secrets init`
