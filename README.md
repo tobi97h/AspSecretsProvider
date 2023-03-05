@@ -21,3 +21,6 @@ Simply set the entire secret json as an environmental variable
 
 Simply call `IServiceCollection.AddDevSecretsProvider(defaultSection)` or `IServiceCollection.AddEnvSecretsProvider(defaultPrefix)`
 in your configuration class. This then tries to read the prefixed Secrets from env / the cli set secrets, based on the class name.
+
+You may also call `WebApplicationBuilder.AddSecretsProvider(defaultSection)` for an implementation that adds the dev provider if `IsDevelopment()` / the env
+provider if `IsProduction()`.
