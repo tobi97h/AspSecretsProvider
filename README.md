@@ -5,7 +5,7 @@ via env or the cli.
 
 This package is also available on nuget 
 
-`dotnet add package SecretsProvider --version 1.0.0`
+`dotnet add package SecretsProvider --version 1.0.1`
 
 ## cli
 
