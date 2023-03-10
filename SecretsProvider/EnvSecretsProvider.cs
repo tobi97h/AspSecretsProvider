@@ -20,10 +20,10 @@ public class EnvSecretsProvider : ISecretsProvider
     public T GetSecret<T>(string prefix)
     {
         var secretName = typeof(T).Name;
-        var secretJsonFromEnv = Environment.GetEnvironmentVariable(prefix + secretName.ToUpper());
+        var secretJsonFromEnv = Environment.GetEnvironmentVariable(prefix + "_" + secretName.ToUpper());
         if (string.IsNullOrEmpty(secretJsonFromEnv))
         {
-            throw new Exception("Env var for secret " + prefix + secretName.ToUpper() + " not set!");
+            throw new Exception("Env var for secret " + prefix + "_" + secretName.ToUpper() + " not set!");
         }
 
         var secret = JsonSerializer.Deserialize<T>(secretJsonFromEnv);
