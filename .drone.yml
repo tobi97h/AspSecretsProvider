@@ -1,0 +1,21 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: dotnet publish
+    image: mcr.microsoft.com/dotnet/sdk:6.0
+    environment: 
+      API_KEY:
+        from_secret: nuget_api_key
+    commands:
+      - dotnet build
+      - dotnet pack /p:Version=1.0.4
+      - cd SecretsProvider/bin/Debug
+      - dotnet nuget push SecretsProvider.1.0.4.nupkg --api-key $API_KEY --source https://api.nuget.org/v3/index.json
+
+trigger:
+  branch:
+    - master
+  event:
+    - push
