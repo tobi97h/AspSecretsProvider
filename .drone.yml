@@ -10,9 +10,9 @@ steps:
         from_secret: nuget_api_key
     commands:
       - dotnet build
-      - dotnet pack /p:Version=1.0.4
+      - dotnet pack /p:Version=1.0.5
       - cd SecretsProvider/bin/Debug
-      - dotnet nuget push SecretsProvider.1.0.4.nupkg --api-key $API_KEY --source https://api.nuget.org/v3/index.json
+      - dotnet nuget push SecretsProvider.1.0.5.nupkg --api-key $API_KEY --source https://api.nuget.org/v3/index.json
 
 trigger:
   branch:
