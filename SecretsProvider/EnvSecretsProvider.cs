@@ -5,20 +5,32 @@ namespace SecretsProvider;
 
 public class EnvSecretsProvider : ISecretsProvider
 {
-    private readonly string _defaultPrefix;
+    private readonly string? _defaultPrefix;
     
-    public EnvSecretsProvider(string defaultPrefix)
+    public EnvSecretsProvider(string? defaultPrefix = null)
     {
         _defaultPrefix = defaultPrefix;
     }
-
+    
     public T GetSecret<T>()
     {
-        return GetSecret<T>(_defaultPrefix);
-    }
-    
-    public T GetSecret<T>(string prefix)
-    {
+        string prefix;
+        SectionAttribute? sectionAttribute = (SectionAttribute?) Attribute.GetCustomAttribute(typeof(T), typeof(SectionAttribute));
+        
+        if (_defaultPrefix == null && sectionAttribute == null)
+        {
+            throw new Exception("Neither Section Attribute defined nor default prefix defined");
+        }
+        
+        if (sectionAttribute != null)
+        {
+            prefix = sectionAttribute.SectionName;
+        }
+        else
+        {
+            prefix = _defaultPrefix;
+        }
+
         var secretName = typeof(T).Name;
         var secretJsonFromEnv = Environment.GetEnvironmentVariable(prefix + "_" + secretName.ToUpper());
         if (string.IsNullOrEmpty(secretJsonFromEnv))

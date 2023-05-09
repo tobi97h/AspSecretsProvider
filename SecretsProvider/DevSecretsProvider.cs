@@ -7,9 +7,9 @@ public class DevSecretsProvider : ISecretsProvider
 {
     private readonly IConfiguration _configuration;
 
-    private readonly string _defaultSection;
+    private readonly string? _defaultSection;
     
-    public DevSecretsProvider(IConfiguration configuration, string defaultSection)
+    public DevSecretsProvider(IConfiguration configuration, string? defaultSection = null)
     {
         _configuration = configuration;
         _defaultSection = defaultSection;
@@ -17,12 +17,17 @@ public class DevSecretsProvider : ISecretsProvider
 
     public T GetSecret<T>()
     {
-        return GetSecret<T>(_defaultSection);
-    }
-    
-    public T GetSecret<T>(string section)
-    {
-        var secret = _configuration.GetSection(section).Get<T>();
-        return secret;
+        SectionAttribute? sectionAttribute = (SectionAttribute?) Attribute.GetCustomAttribute(typeof(T), typeof(SectionAttribute));
+        if (sectionAttribute != null)
+        {
+            return _configuration.GetSection(sectionAttribute.SectionName).Get<T>();
+        }
+
+        if (_defaultSection == null)
+        {
+            throw new Exception("Neither Section Attribute defined nor default section provided");
+        }
+        
+        return _configuration.GetSection(_defaultSection).Get<T>();
     }
 }
