@@ -30,7 +30,7 @@ dotnet user-secrets set "SECA:testsecret" "hello1"
 
 # In prod
 
-As env variable with a corresponding json value for the class (single line) `export SECA='{ "testsecret" : "hello1" }'`.
+As env variable with a corresponding json value for the class (single line) `export SECA_ExampleSecretModelA='{ "testsecret" : "hello1" }'`.
 
 # Retrieving a Secret
 
