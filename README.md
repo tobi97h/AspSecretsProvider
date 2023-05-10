@@ -21,6 +21,8 @@ public class ExampleSecretModelA
 }
 ```
 
+The value passed to the section attribute can be the same for multiple classes. In the end it just has to map, otherwise the values will be null.
+
 # Setting secrets in development
 
 ```bash
